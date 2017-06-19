@@ -18,6 +18,8 @@
 		26ED18621EF7707800C20ABC /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED185D1EF7707800C20ABC /* ytcpsocket.swift */; };
 		26ED18631EF7707800C20ABC /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 26ED185E1EF7707800C20ABC /* yudpsocket.c */; };
 		26ED18641EF7707800C20ABC /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED185F1EF7707800C20ABC /* yudpsocket.swift */; };
+		26ED18661EF7711200C20ABC /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED18651EF7711200C20ABC /* ServerManager.swift */; };
+		26ED18681EF7712800C20ABC /* ClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED18671EF7712800C20ABC /* ClientManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		26ED185D1EF7707800C20ABC /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
 		26ED185E1EF7707800C20ABC /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
 		26ED185F1EF7707800C20ABC /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
+		26ED18651EF7711200C20ABC /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		26ED18671EF7712800C20ABC /* ClientManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				26ED185A1EF7707800C20ABC /* ysocket */,
+				26ED18651EF7711200C20ABC /* ServerManager.swift */,
+				26ED18671EF7712800C20ABC /* ClientManager.swift */,
 			);
 			path = Socket;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26ED18661EF7711200C20ABC /* ServerManager.swift in Sources */,
 				26ED18601EF7707800C20ABC /* ysocket.swift in Sources */,
 				26ED18301EF76FFB00C20ABC /* ViewController.swift in Sources */,
 				26ED18631EF7707800C20ABC /* yudpsocket.c in Sources */,
@@ -293,6 +300,7 @@
 				26ED182E1EF76FFB00C20ABC /* AppDelegate.swift in Sources */,
 				26ED18621EF7707800C20ABC /* ytcpsocket.swift in Sources */,
 				26ED18641EF7707800C20ABC /* yudpsocket.swift in Sources */,
+				26ED18681EF7712800C20ABC /* ClientManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
