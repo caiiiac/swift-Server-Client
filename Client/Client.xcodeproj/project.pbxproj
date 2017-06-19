@@ -20,6 +20,8 @@
 		26ED18F31EF777DC00C20ABC /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 26ED18EE1EF777DC00C20ABC /* yudpsocket.c */; };
 		26ED18F41EF777DC00C20ABC /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED18EF1EF777DC00C20ABC /* yudpsocket.swift */; };
 		26ED18F61EF777F900C20ABC /* SANSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED18F51EF777F900C20ABC /* SANSocket.swift */; };
+		26ED18F91EF778DA00C20ABC /* IMMessage.proto in Resources */ = {isa = PBXBuildFile; fileRef = 26ED18F71EF778DA00C20ABC /* IMMessage.proto */; };
+		26ED18FA1EF778DA00C20ABC /* Immessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED18F81EF778DA00C20ABC /* Immessage.proto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		26ED18EE1EF777DC00C20ABC /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
 		26ED18EF1EF777DC00C20ABC /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
 		26ED18F51EF777F900C20ABC /* SANSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SANSocket.swift; sourceTree = "<group>"; };
+		26ED18F71EF778DA00C20ABC /* IMMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IMMessage.proto; sourceTree = "<group>"; };
+		26ED18F81EF778DA00C20ABC /* Immessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Immessage.proto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				26ED18C21EF7774800C20ABC /* Assets.xcassets */,
 				26ED18C41EF7774800C20ABC /* LaunchScreen.storyboard */,
 				26ED18C71EF7774800C20ABC /* Info.plist */,
+				26ED18F71EF778DA00C20ABC /* IMMessage.proto */,
+				26ED18F81EF778DA00C20ABC /* Immessage.proto.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -266,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26ED18F91EF778DA00C20ABC /* IMMessage.proto in Resources */,
 				26ED18C61EF7774800C20ABC /* LaunchScreen.storyboard in Resources */,
 				26ED18C31EF7774800C20ABC /* Assets.xcassets in Resources */,
 				26ED18C11EF7774800C20ABC /* Main.storyboard in Resources */,
@@ -301,6 +308,7 @@
 				26ED18F61EF777F900C20ABC /* SANSocket.swift in Sources */,
 				26ED18F21EF777DC00C20ABC /* ytcpsocket.swift in Sources */,
 				26ED18F41EF777DC00C20ABC /* yudpsocket.swift in Sources */,
+				26ED18FA1EF778DA00C20ABC /* Immessage.proto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
