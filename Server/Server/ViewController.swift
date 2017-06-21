@@ -11,19 +11,21 @@ import Cocoa
 class ViewController: NSViewController {
     
     @IBOutlet weak var hintLabel: NSTextField!
-    fileprivate lazy var serverMgr : ServerManager = ServerManager()
+    fileprivate lazy var serverSocket : ServerSocket = ServerSocket()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func startServer(_ sender: NSButton) {
-        serverMgr.startRunning()
         hintLabel.stringValue = "服务器已经开启ing"
+        
+        serverSocket.startRunning("0.0.0.0", 7999)
     }
     
     @IBAction func stopServer(_ sender: NSButton) {
-        serverMgr.stopRunning()
         hintLabel.stringValue = "服务器未开启"
+        
+        serverSocket.stopRunning()
     }
 }

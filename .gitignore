@@ -1,1 +1,5 @@
 .DS_Store
+/Client/Pods
+/Server/Server.xcworkspace
+/Server/Pods
+/Client/Client.xcworkspace

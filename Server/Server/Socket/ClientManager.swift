@@ -9,15 +9,16 @@
 import Cocoa
 
 protocol ClientManagerDelegate : class {
-    func sendMsgToClient(_ data : Data)
+    func removeClient(_ client : ClientManager)
+    func forwardMessage(_ client : ClientManager, msgData : Data, isLeave : Bool)
 }
 
 class ClientManager: NSObject {
-    var tcpClient : TCPClient
     
     weak var delegate : ClientManagerDelegate?
     
-    fileprivate var isClientConnected : Bool = false
+    fileprivate var tcpClient : TCPClient
+    fileprivate var isClientRunning : Bool = false
     
     init(tcpClient : TCPClient) {
         self.tcpClient = tcpClient
@@ -27,47 +28,41 @@ class ClientManager: NSObject {
 
 extension ClientManager {
     func startReadMsg() {
-        isClientConnected = true
-        while isClientConnected {
-            if let lMsg = tcpClient.read(4) {
-                // 1.读取长度的data
-                let headData = Data(bytes: lMsg, count: 4)
+        isClientRunning = true
+        while isClientRunning {
+            // 1.取出长度消息
+            if let lengthMsg = tcpClient.read(4) {
+                let lData = Data(bytes: lengthMsg, count: 4)
                 var length : Int = 0
-                (headData as NSData).getBytes(&length, length: 4)
+                (lData as NSData).getBytes(&length, length: 4)
                 
-                // 2.读取类型
+                // 2.读取类型消息
                 guard let typeMsg = tcpClient.read(2) else {
-                    return
+                    continue
                 }
-                let typeData = Data(bytes: typeMsg, count: 2)
+                
                 var type : Int = 0
-                (typeData as NSData).getBytes(&type, length: 2)
+                let tdata = Data(bytes: typeMsg, count: 2)
+                (tdata as NSData).getBytes(&type, length: 2)
                 print(type)
-                
-                // 2.根据长度, 读取真实消息
+                // 3.读取消息
                 guard let msg = tcpClient.read(length) else {
-                    return
+                    continue
                 }
-                let data = Data(bytes: msg, count: length)
+                let msgData = Data(bytes: msg, count: length)
                 
-                /*
-                 switch type {
-                 case 0, 1:
-                 let user = try! UserInfo.parseFrom(data: data)
-                 print(user.name)
-                 print(user.level)
-                 default:
-                 print("未知类型")
-                 }
-                 */
-                let totalData = headData + typeData + data
-                delegate?.sendMsgToClient(totalData)
+                // 4.消息转发出去
+                let totalData = lData + tdata + msgData
+                let isLeave = type == 1
+                delegate?.forwardMessage(self, msgData: totalData, isLeave: isLeave)
             } else {
-                isClientConnected = false
-                print("客户端断开了连接")
-                tcpClient.close()
+                isClientRunning = false
+                delegate?.removeClient(self)
             }
         }
     }
+    
+    func sendMsg(_ data : Data) {
+        _ = tcpClient.send(data: data)
+    }
 }
-
