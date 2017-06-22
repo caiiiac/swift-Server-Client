@@ -12,7 +12,7 @@ import ProtocolBuffers
 class ViewController: UIViewController {
     
     //    fileprivate lazy var tcpClient : TCPClient = TCPClient(addr: "192.168.1.100", port: 7999)
-    fileprivate lazy var socket : SANSocket = SANSocket(addr: "192.168.0.104", port: 7999)
+    fileprivate lazy var socket : SANSocket = SANSocket(addr: "192.168.1.108", port: 7999)
     
     override func viewDidLoad() {
         super.viewDidLoad()
