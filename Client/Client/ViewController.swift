@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     //    fileprivate lazy var tcpClient : TCPClient = TCPClient(addr: "192.168.1.100", port: 7999)
     fileprivate lazy var socket : SANSocket = SANSocket(addr: "192.168.1.108", port: 7999)
+    fileprivate var timer : Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,9 @@ class ViewController: UIViewController {
         if socket.connectServer(10) {
             print("连接成功")
             socket.startReadMsg()
+            
+            timer = Timer(fireAt: Date(), interval: 9, target: self, selector: #selector(sendBeatsData), userInfo: nil, repeats: true)
+            RunLoop.main.add(timer, forMode: .commonModes)
         }
         
         /*
@@ -48,6 +52,10 @@ class ViewController: UIViewController {
          */
     }
     
+    deinit {
+        timer.invalidate()
+        timer = nil
+    }
     
     @IBAction func btnClick(_ sender: UIButton) {
         
@@ -66,5 +74,9 @@ class ViewController: UIViewController {
     }
 }
 
-
+extension ViewController {
+    @objc fileprivate func sendBeatsData() {
+        socket.sendBeatsData()
+    }
+}
 
