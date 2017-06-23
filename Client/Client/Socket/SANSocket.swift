@@ -133,6 +133,14 @@ extension SANSocket {
         sendMsg(type: 3, msgData: giftData)
     }
     
+    func sendBeatsData() {
+        let heartStr = "heart"
+        let heartData = heartStr.data(using: .utf8)!
+        
+        sendMsg(type: 100, msgData: heartData)
+        
+    }
+    
     func sendMsg(type : Int, msgData : Data) {
         // 1.长度data
         var length = msgData.count
