@@ -17,6 +17,8 @@ class ClientManager: NSObject {
     
     weak var delegate : ClientManagerDelegate?
     
+    fileprivate var revBeats : Bool = false
+    
     fileprivate var tcpClient : TCPClient
     fileprivate var isClientRunning : Bool = false
     
@@ -29,6 +31,12 @@ class ClientManager: NSObject {
 extension ClientManager {
     func startReadMsg() {
         isClientRunning = true
+        
+        
+        let timer = Timer(fireAt: Date(timeIntervalSinceNow: 10), interval: 10, target: self, selector: #selector(checkBeats), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: .defaultRunLoopMode)
+        RunLoop.current.run()
+        
         while isClientRunning {
             // 1.取出长度消息
             if let lengthMsg = tcpClient.read(4) {
@@ -51,6 +59,16 @@ extension ClientManager {
                 }
                 let msgData = Data(bytes: msg, count: length)
                 
+                if type == 1 {
+                    tcpClient.close()
+                    delegate?.removeClient(self)
+                } else if type == 100 {
+                    revBeats = true
+                    let message = String(data: msgData, encoding: .utf8)!
+                    print(message)
+                    continue
+                }
+                
                 // 4.消息转发出去
                 let totalData = lData + tdata + msgData
                 let isLeave = type == 1
@@ -58,11 +76,24 @@ extension ClientManager {
             } else {
                 isClientRunning = false
                 delegate?.removeClient(self)
+                tcpClient.close()
             }
         }
     }
     
     func sendMsg(_ data : Data) {
         _ = tcpClient.send(data: data)
+    }
+}
+
+extension ClientManager {
+    @objc func checkBeats() {
+        print("---------")
+        if !revBeats {
+            tcpClient.close()
+            delegate?.removeClient(self)
+        } else {
+            revBeats = false
+        }
     }
 }
