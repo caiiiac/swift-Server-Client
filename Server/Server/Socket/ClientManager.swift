@@ -17,10 +17,9 @@ class ClientManager: NSObject {
     
     weak var delegate : ClientManagerDelegate?
     
-    fileprivate var revBeats : Bool = false
-    
     fileprivate var tcpClient : TCPClient
     fileprivate var isClientRunning : Bool = false
+    fileprivate var heartTimerCount : Int = 0
     
     init(tcpClient : TCPClient) {
         self.tcpClient = tcpClient
@@ -33,9 +32,9 @@ extension ClientManager {
         isClientRunning = true
         
         
-        let timer = Timer(fireAt: Date(timeIntervalSinceNow: 10), interval: 10, target: self, selector: #selector(checkBeats), userInfo: nil, repeats: true)
-        RunLoop.current.add(timer, forMode: .defaultRunLoopMode)
-        RunLoop.current.run()
+        let timer = Timer(fireAt: Date(), interval: 1, target: self, selector: #selector(checkBeats), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: .commonModes)
+        timer.fire()
         
         while isClientRunning {
             // 1.取出长度消息
@@ -63,7 +62,7 @@ extension ClientManager {
                     tcpClient.close()
                     delegate?.removeClient(self)
                 } else if type == 100 {
-                    revBeats = true
+                    heartTimerCount = 0
                     let message = String(data: msgData, encoding: .utf8)!
                     print(message)
                     continue
@@ -74,9 +73,7 @@ extension ClientManager {
                 let isLeave = type == 1
                 delegate?.forwardMessage(self, msgData: totalData, isLeave: isLeave)
             } else {
-                isClientRunning = false
-                delegate?.removeClient(self)
-                tcpClient.close()
+                self.removeClient()
             }
         }
     }
@@ -84,16 +81,18 @@ extension ClientManager {
     func sendMsg(_ data : Data) {
         _ = tcpClient.send(data: data)
     }
-}
-
-extension ClientManager {
+    
+    private func removeClient() {
+        isClientRunning = false
+        delegate?.removeClient(self)
+        tcpClient.close()
+    }
+    
     @objc func checkBeats() {
-        print("---------")
-        if !revBeats {
-            tcpClient.close()
-            delegate?.removeClient(self)
-        } else {
-            revBeats = false
+        heartTimerCount += 1
+        if heartTimerCount >= 10 {
+            self.removeClient()
         }
     }
 }
+
