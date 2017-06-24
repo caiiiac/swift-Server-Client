@@ -12,7 +12,7 @@ import ProtocolBuffers
 class ViewController: UIViewController {
     
     //    fileprivate lazy var tcpClient : TCPClient = TCPClient(addr: "192.168.1.100", port: 7999)
-    fileprivate lazy var socket : SANSocket = SANSocket(addr: "192.168.1.108", port: 7999)
+    fileprivate lazy var socket : SANSocket = SANSocket(addr: "192.168.1.121", port: 7999)
     fileprivate var timer : Timer!
     
     override func viewDidLoad() {
@@ -22,34 +22,10 @@ class ViewController: UIViewController {
             print("连接成功")
             socket.startReadMsg()
             
-            timer = Timer(fireAt: Date(), interval: 9, target: self, selector: #selector(sendBeatsData), userInfo: nil, repeats: true)
+            timer = Timer(fireAt: Date(), interval: 8, target: self, selector: #selector(sendBeatsData), userInfo: nil, repeats: true)
             RunLoop.main.add(timer, forMode: .commonModes)
         }
         
-        /*
-         if tcpClient.connect(timeout: 5).0 {
-         let p = Person.Builder()
-         p.id = 19880101
-         p.name = "coderwhy"
-         p.email = "372623326@qq.com"
-         
-         let pdata = (try! p.build()).data()
-         
-         // 1.用户记录长度的data
-         var length = pdata.count
-         let lengthData = Data(bytes: &length, count: 4)
-         //            _ = tcpClient.send(data: lengthData)
-         
-         // 2.发哦少年宫类型
-         var type = 2
-         let typeData = Data(bytes: &type, count: 2)
-         //            _ = tcpClient.send(data: typeData)
-         
-         // 3.发送真实消息
-         let data = lengthData + typeData + pdata
-         _ = tcpClient.send(data: data)
-         }
-         */
     }
     
     deinit {
@@ -67,7 +43,7 @@ class ViewController: UIViewController {
         case 2:
             socket.sendTextMsg("你好")
         case 3:
-            socket.sendGiftMsg("服务商", "http://www.abc.com", 1000)
+            socket.sendGiftMsg("鲜花", "http://www.abc.com", 1000)
         default:
             print("未识别消息")
         }
@@ -76,6 +52,7 @@ class ViewController: UIViewController {
 
 extension ViewController {
     @objc fileprivate func sendBeatsData() {
+        print("发送beats");
         socket.sendBeatsData()
     }
 }
